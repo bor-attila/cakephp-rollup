@@ -13,7 +13,7 @@ You can install this plugin into your CakePHP application using [composer](https
 The recommended way to install composer packages is:
 
 ```
-composer require bor-attila/cakephp-rollup:dev-master
+composer require bor-attila/cakephp-rollup
 ```
 
 Enable the plugin in your __Application.php__:
