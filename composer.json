@@ -1,0 +1,24 @@
+{
+    "name": "bor-attila/cakephp-rollup",
+    "description": "Rollup plugin for CakePHP for better CSS/JS",
+    "type": "cakephp-plugin",
+    "keywords": [
+        "rollupjs",
+        "babel",
+        "scss",
+        "js",
+        "css",
+        "cakephp-plugin",
+        "sass"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2",
+        "cakephp/cakephp": "4.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "CakephpRollup\\": "src/"
+        }
+    }
+}
