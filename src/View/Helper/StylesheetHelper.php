@@ -46,7 +46,7 @@ class StylesheetHelper extends Helper
     {
         $cache = $this->getConfig('cache');
         if ($cache) {
-            $style = Cache::read('rollup/stylesheets/global', $cache);
+            $style = Cache::read('rollup_stylesheets_global', $cache);
             if (is_string($style)) {
 
                 return $style;
@@ -65,7 +65,7 @@ class StylesheetHelper extends Helper
         $this->addStyleTag($style);
 
         if ($cache) {
-            Cache::write('rollup/stylesheets/global', $style, $cache);
+            Cache::write('rollup_stylesheets_global', $style, $cache);
         }
 
         return $style;
@@ -106,7 +106,7 @@ class StylesheetHelper extends Helper
     {
         $cache = $this->getConfig('cache');
         if ($cache) {
-            $style = Cache::read('rollup/stylesheets/inline/' . $name, $cache);
+            $style = Cache::read('rollup_stylesheets_inline_' . $name, $cache);
             if (is_string($style)) {
                 return $style;
             }
@@ -122,7 +122,7 @@ class StylesheetHelper extends Helper
         $this->addStyleTag($style);
 
         if ($cache) {
-            Cache::write('rollup/stylesheets/inline/' . $name, $style, $cache);
+            Cache::write('rollup_stylesheets_inline_' . $name, $style, $cache);
         }
 
         return $style;

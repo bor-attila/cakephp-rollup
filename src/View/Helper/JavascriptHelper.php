@@ -44,7 +44,7 @@ class JavascriptHelper extends Helper
      */
     public function files(string ...$scripts): array
     {
-        $cacheKey = 'rollup/javascript/' . join('/', $scripts);
+        $cacheKey = 'rollup_javascript_' . join('_', $scripts);
         $cache = $this->getConfig('cache');
         if ($cache) {
             $script = Cache::read($cacheKey, $cache);
