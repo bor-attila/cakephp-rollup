@@ -75,9 +75,9 @@ class SassCommand extends Command
             if (preg_match('/^[a-zA-Z].*\.scss$/', $scss->getFileName())) {
                 $filename = $scss->getFileName();
                 $files_parameter .=
-                    escapeshellarg($sass_directory . DS . $filename)
+                    '"' . $sass_directory . DS . $filename . '"'
                     . ':' .
-                    escapeshellarg($css_directory . DS . preg_replace('/\.scss$/', '.min.css', $filename));
+                    '"' . $css_directory . DS . preg_replace('/\.scss$/', '.min.css', $filename) . '"' . ' ';
             }
         }
 
@@ -101,8 +101,8 @@ class SassCommand extends Command
             $command .= ' --trace';
         }
         $command .= ' ' . $files_parameter;
-        $io->out($command);
-        
+        $io->out(trim($command));
+
         return self::CODE_SUCCESS;
     }
 }
