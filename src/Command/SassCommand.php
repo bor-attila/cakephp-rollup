@@ -35,6 +35,18 @@ class SassCommand extends Command
                 'help' => 'Sub directory name. Relative to WWW_ROOT',
                 'boolean' => false,
                 'default' => ''
+            ])
+            ->addOption('trace', [
+                'short' => 't',
+                'help' => 'Print full Dart stack traces for exceptions.',
+                'boolean' => true,
+                'default' => false,
+            ])
+            ->addOption('poll', [
+                'short' => 'p',
+                'help' => 'Manually check for changes rather than using a native watcher. Only valid with --watch.',
+                'boolean' => true,
+                'default' => false,
             ]);
         return $parser;
     }
@@ -63,20 +75,31 @@ class SassCommand extends Command
             if (preg_match('/^[a-zA-Z].*\.scss$/', $scss->getFileName())) {
                 $filename = $scss->getFileName();
                 $files_parameter .=
-                    $sass_directory . DS . $filename
+                    escapeshellarg($sass_directory . DS . $filename)
                     . ':' .
-                    $css_directory . DS . preg_replace('/\.scss$/', '.min.css ', $filename);
+                    escapeshellarg(preg_replace('/\.scss$/', '.min.css ', $filename));
             }
         }
         if (!$files_parameter) {
 
             return self::CODE_SUCCESS;
         }
+
+        $command = 'sass --no-source-map';
         if ($args->getOption('watch')) {
-            $io->out("sass --no-source-map --style=expanded --update --watch {$files_parameter}");
+            if ($args->getOption('poll')) {
+                $command .= ' --style=expanded --update --watch --poll';
+            } else {
+                $command .= ' --style=expanded --update --watch';
+            }
         } else {
-            $io->out("sass --no-source-map --style=compressed {$files_parameter}");
+            $command .= ' --style=compressed';
         }
+
+        if ($args->getOption('trace')) {
+            $command .= ' --trace';
+        }
+        $command .= ' ' . $files_parameter . ' ' .  $css_directory . DS;
 
         return self::CODE_SUCCESS;
     }
